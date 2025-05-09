@@ -6,15 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SalaryView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var allocations: [Allocation]
     
-    @State private var salaryViewModel = SalaryViewModel()
-    
-    @State private var currency: Currency = .usd
-    @State private var salary: Double = 0
+    @AppStorage("defaultCurrency") private var currency: Currency = .usd
+    @AppStorage("defaultSalary") private var salary: Double = 0
     @State private var isAddAllocationForm = false
     
     var body: some View {
@@ -23,17 +22,19 @@ struct SalaryView: View {
                 Group {
                     SalaryFormView(salary: $salary, currency: $currency)
                     separatorHorizontal
-                    TotalBarView(salaryViewModel: $salaryViewModel, salary: $salary, currency: $currency, isAddAllocationForm: $isAddAllocationForm)
+                    TotalBarView(salary: $salary, currency: $currency, isAddAllocationForm: $isAddAllocationForm)
                 }
                 .padding(.horizontal)
                 
                 if isAddAllocationForm {
-                    AllocationFormView(salary: $salary, currency: $currency, isAddAllocationForm: $isAddAllocationForm, salaryViewModel: $salaryViewModel)
+                    AllocationFormView(salary: $salary, currency: $currency, isAddAllocationForm: $isAddAllocationForm)
                 }
             
-                AllocationsListView(salaryViewModel: $salaryViewModel, currency: $currency, salary: $salary)
+                AllocationsListView(currency: $currency, salary: $salary)
             }
             .fontDesign(.monospaced)
+            .navigationTitle("Calculator")
+            .toolbarTitleDisplayMode(.inline)
         }
     }
     

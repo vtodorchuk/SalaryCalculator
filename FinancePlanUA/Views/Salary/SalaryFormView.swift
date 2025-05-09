@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct SalaryFormView: View {
+    @Binding var salary: Double
+    @Binding var currency: Currency
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack(alignment: .bottom) {
+            Text("Salary:")
+            TextField("Your salary", value: $salary, format: .number)
+                .keyboardType(.numbersAndPunctuation)
+            Text(currency.rawValue)
+        }
+        .font(.title2)
+        .foregroundStyle(.foreground)
     }
-}
-
-#Preview {
-    SalaryFormView()
 }

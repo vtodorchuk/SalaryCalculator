@@ -8,8 +8,33 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("defaultCurrency") private var defaultCurrency: Currency = .usd
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            Form {
+                Section("Default Currency") {
+                    HStack {
+                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                            .fill(.green.secondary)
+                            .frame(width: 30, height: 30)
+                            .overlay {
+                                Image(systemName: "bitcoinsign.circle")
+                                    .foregroundStyle(.primary)
+                            }
+                        
+                        Picker("Currency", selection: $defaultCurrency) {
+                            ForEach(Currency.allCases, id: \.self) { currency in
+                                Text(currency.rawValue).tag(currency.rawValue)
+                            }
+                        }
+                        .pickerStyle(.navigationLink)
+                    }
+                }
+            }
+            .navigationTitle("Settings")
+            .fontDesign(.monospaced)
+        }
     }
 }
 

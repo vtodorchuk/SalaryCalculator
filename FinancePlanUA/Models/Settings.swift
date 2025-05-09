@@ -9,10 +9,10 @@ import Foundation
 import SwiftData
 
 @Model
-final class Item {
-    var timestamp: Date
+final class Settings {
+    var defaultCurrency = Currency.usd
     
-    init(timestamp: Date) {
-        self.timestamp = timestamp
+    init(defaultCurrency: Currency) {
+        self.defaultCurrency = defaultCurrency
     }
 }
