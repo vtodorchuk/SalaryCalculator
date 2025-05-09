@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("defaultCurrency") private var defaultCurrency: Currency = .usd
+    @AppStorage("isBiometricAuthentication") private var isBiometricAuthentication = false
     
     var body: some View {
         NavigationStack {
@@ -29,6 +30,20 @@ struct SettingsView: View {
                             }
                         }
                         .pickerStyle(.navigationLink)
+                    }
+                }
+                
+                Section("Security") {
+                    HStack {
+                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                            .fill(.yellow.secondary)
+                            .frame(width: 30, height: 30)
+                            .overlay {
+                                Image(systemName: "faceid")
+                                    .foregroundStyle(.primary)
+                            }
+                        Text("Use Biometric")
+                        Toggle("", isOn: $isBiometricAuthentication)
                     }
                 }
             }
